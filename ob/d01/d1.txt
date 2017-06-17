@@ -1,0 +1,25 @@
+在计算机内存中，统一使用Unicode编码，当需要保存大硬盘或者需要传输的时候，就转换为UTF-8编码。用记事本编辑的时候，从文件读取的UTF-8字符被转换为Unicode字符到内存里，编辑完成后，保存的时候再把Unicode转换为UTF-8保存为文件。
+import moduleName
+from module import xxx (导入某个功能)
+import moduleName as newName
+from module import * (导入所有功能，不建议，方法变量可能会冲突)
+'''   ......   ''' 多行注释/格式化输出
+raw_input() --> int(raw_input())
+input() 
+/*
+raw_input() 将所有输入作为字符串看待，返回字符串类型。
+input() 在对待纯数字输入时具有自己的特性，它返回所输入的数字的类型(int, float);同时input() 可接受合法的 python 表达式，例：input( 1 + 3 ) 会返回 int 型的 4 。
+查看 Built-in Functions ，得知：
+	input([prompt])
+
+  		Equivalent to eval(raw_input(prompt)) 
+input() 本质上还是使用 raw_input() 来实现的，只是调用完 raw_input() 之后再调用 eval() 函数，所以可以将表达式作为 input() 的参数，并且它会计算表达式的值并返回它。
+*/
+id(var)  # 内存地址
+ord(char) # ASCII数值或Unicode数值
+if elif else流程判断，永远只有一个执行结果，满足就结束
+
+编写登录接口
+-- 输入用户名密码
+-- 认证成功后显示欢迎信息
+-- 输错三次后锁定 （硬盘文件操作以永久保存）
