@@ -1,0 +1,172 @@
+
+反射
+装饰器
+
+package就是文件夹里加个__init__.py
+eclipse  断点+debug模式运行
+导入某文件夹下的py文件当一个模块,必须在那文件夹中加入__init__.py文件,令其成为包后才行。
+
+模块和模块的常用方法
+至关重要的__init.py__
+是否为主文件：__name__
+	if __name__ == '__main__'
+当前文件路径：__file__
+当前文件描述：__doc__
+
+def Fun(arg, *args, **kwargs):  # 对于有默认值的参数(如arg='xxx'),都得放到后面;
+有默认值的位置上没参数时按默认值输出;带1个*的参数,你可以随便输入几个值，py会包装成一个列表;带2个**的会将输入的参数包装成一个字典
+	print arg  # 默认参数
+	print args  # 可变参数,参数长度不固定;若调用时直接在该位置输入参数而非变量,则不必加*号
+	print kwargs  # 可变参数,参数长度不固定;若调用时直接在该位置输入参数而非变量,则不必加**号
+	return 'success'  # 返回值
+
+xrange()  # 只有在迭代遍历时才会去创建,(没遍历时)平常只是个生成器generator,即延时创建
+
+def foo():  # yield在写多线程时可作为线程池
+	yield 1
+	yield 2
+	yield 3
+	yield 4
+	yield 5
+
+re = foo()
+# print re
+for item in re:
+	print item
+
+with open() as f:  # 一旦走出pass这列的位置,会自动执行f.close()
+	pass
+
+可以用yield模拟个xreadlines()方法:
+def new_xReadlines():
+	seek = 0
+	while True:
+		with open('D:/temp.txt', 'r') as f:
+			f.seek(seek)
+			data = f.readline()
+			if data:
+				seek = f.tell()
+				yield data
+			else:
+				return
+
+for item in new_xReadlines():
+	print item
+
+py的三元:
+	result = 'gt' if 1>3 else 'lt'  # 和js的比起来更直观些;只是形式上不紧凑
+py的lambda:
+	a = lambda x,y:x+y  # 接收了2个参数‘x’和‘y’,执行了‘:’后的操作后将结果返回|当然参数不限|简单函数用lambda代替
+	print a(4,10)
+
+内置函数：
+help
+dir
+vars
+type
+reload(module)  # import一个module就会执行module里的代码(当然一般都是函数定义,所以表面上看不出什么来)在py中是做了优化的,你导入2次,它是不会再去执行一遍module里的函数的,但你非要再让它从头执行一遍的话,直接reload(模块名)就好了
+id
+zip
+eval  # 字符串当表达式去执行
+divmod(m,n)  # 返回m/n的(商,余数)形式的元组,故能用[0]或[1]取到两者任意值|分页计算|
+pow  # 指数
+chr 可用于简单的验证码生成|与ord相对
+
+map(Function,sequence[,sequence,...])  # 遍历序列里的每一个元素,将其作为参数传入函数里边| map对所有值进行操作
+li = [11,22,33]
+def foo(arg):
+	if arg<22:
+		return True
+	else:
+		return False
+
+tmp = filter(foo, li)  # filter只对通过函数判断条件的值进行操作
+print tmp
+reduce(function, sequence[, initial])  # 实际操作根据function内容而定,逐步减少序列元素
+
+...
+http://www.cnblogs.com/wupeiqi/articles/4276448.html
+
+由于bool('')或bool(None)都是False,故可据all([u,v,w...z])的值可以判断这列表里有无空字符串
+li = ['手表', '汽车', '房']
+for item in li:
+	print item
+for item in enumerate(li, 1):  # 1可换,只是个起始序号
+	print item[0], item[1]
+
+s = 'I am {0}'
+print s.format('tdd')
+
+#反射 __import__、getattr
+temp = 'sys'
+module = __import__(temp)  # 以字符串形式导入模块,这就是反射特性之一,相当于import sys,可取注下行验证|这在需要切换模块时很方便
+#print module.path
+--------------
+temp = 'mysqlhelper'
+some_func = 'foo'
+module = __import__(temp)
+func = getattr(module, some_func)  # 以字符串形式执行函数,反射特性之二|如果在module里找到了foo那个函数,则让foo函数赋于func
+func()  # 即相当于foo()
+
+import random
+code = []
+for i in range(6):
+	if i == random.randint(1, 5):
+		code.append(str(random.randint(1, 5)))
+	else:
+		temp = random.randint(65, 90)
+		code.append(chr(temp))
+print ''.join(code)
+
+import hashlib
+hash = hashlib.md5()
+hash.update('admin')
+print hash.hexdigest()
+print hash.digest()
+
+
+#序列化(特殊二进制的形式加密) / 反序列化  # 多个独立的py进程文件之间内存数据就能直接以某种对象交互了,不必只能先以str存到硬盘的文件中,再从文件中读取str再转化回自己需要的形式(list/dict/yield/class等等)|游戏文件存档(内存数据dump到硬盘里)、socket通信(只能以str传输)
+import pickle
+li = ['alex',11,22,'ok','sb']
+dumpsed = pickle.dumps(li)
+print dumpsed
+print type(dumpsed)
+loadsed = pickle.loads(dumpsed)
+print loadsed
+print type(loadsed)
+pickle.dump(li, open('D:/temp.pk','w'))
+另外,json也有dump()/load()等方法  # 但pickle只能在python中用,其它语言里没这个|json虽然通用,但可序列化的东西少,只能是常规的字典列表等玩意儿,pickle几乎是所有对象都可以(反)序列化
+
+re:
+ compile
+ match search findall  # match是从str开头开始匹配,没匹配到就返回None,有匹配到的话,可再用.group()取出来;search类似,但是会在整个str里去匹配,找到了就停止
+ group groups
+字符：\t # 制表符 . # 除了回车外
+次数: * {m,n}
+
+time三种表示方式：
+ 1.时间戳 1970年1月1日之后的秒 time.time()
+ 2.元组 包含了：年、日、星期等...time.struct_time
+ 3.格式化的字符串 2014-11-11 11:11
+print time.time() 
+	  time.mktime(time.localtime())  # 上2为方式1
+	  
+	  time.gmtime()  # 可加时间戳参数
+	  time.localtime()  # 可加时间戳参数,这是以time.struct_time开头的结构化形式的玩意
+	  time.strptime('2014-11-11', '%Y-%m-%d')  # 上3为方式2
+
+	  time.strftime('%Y-%m-%d')  # 默认当前时间【常用】
+	  time.strftime('%Y-%m-%d', time.localtime())  # 默认当前时间
+	  time.asctime()
+	  time.asctime(time.localtime())
+	  time.ctime(time.time())  # 括号留空默认即当前时间戳;类似JS的new Date(),不过少了'GMT+0800 (中国标准时间)'几个字; 上5为方式3
+
+网上银行
+
+功能：
+  1. 额度 15000
+  2. 可以提现，手续费5%
+  3. 每月最后一天出帐单(每月30天),写入文件
+  4. 记录每月日常消费流水
+  5. 提供还款接口
+  6. (可选) 每月10号为还款日,过期未还,按欠款额5%计息
