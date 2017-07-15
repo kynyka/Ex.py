@@ -1,0 +1,246 @@
+装饰器 不修改原程序的情况下,在其前或其后添加其他操作
+def outer(fun):
+	def wrapper(arg):
+		print '验证'
+		fun(arg)
+		print '啥'
+	return wrapper
+ 
+@outer
+def Func1(arg):
+	print 'func1', arg
+
+@outer
+def Func2(arg):
+	print 'func2', arg
+'''
+下面省略一万行
+'''
+Func1('zzz')
+Func2('yyy')
+
+面向对象: # Py中,函数式编程+反射能百分百替代面向对象编程;但Java/C#就是面向对象编程的
+  ★多态★ 封装 继承
+
+# 抽象
+class Person(object): # 加了(object)表示继承了object方法,此时的属性即分成只读与只写2种L52L56;若去继承,则删L56～L58,L52亦能可读与可写
+	# 静态字段
+	blood = '血' # blood就是属于类的;下面的Name是属于对象的
+
+	def __init__(self, name, flag): # 此函数为构造函数|必需|用于类的实例化|self为创建的对象
+		# 动态字段
+		self.Name = name
+
+		# 私有字段
+		self.__hasBeenToUSA = flag
+
+
+	# 动态方法
+	def having_lunch(self):
+		print self.Name + '正在吃饭'
+
+	def show(self): # 动态方法访问私有字段
+		print self.__hasBeenToUSA
+
+	def Foo2(self): # 动态方法调用私有方法
+		self.__sha()
+
+	# 私有方法
+	def __sha(self):
+		print '这里是私有方法'
+
+	@property  # 私有字段|只读
+	def yume(self):
+		return self.__hasBeenToUSA
+
+	@yume.setter  # 私有字段|只写
+	def yume(self, val):
+		self.__hasBeenToUSA = val
+
+	# 静态方法 | 比起先实例化类(创建对象)后再调用动态方法,能省不少内存空间(它不用创建对象,亦不必在参数里加self参数)|与通过模块.函数名在内存里是一样的,静态方法只是告诉你这方法的从属关系而已,Alex表示是画蛇添足,Eric表示Py开始是模块化编程,后来要加入面向对象编程,于是带入了静态方法,属于历史遗留问题
+	@staticmethod  # 动态方法转变为类的静态方法,需要带上这个装饰器以及去掉self	
+	def Foo():
+		print '哦哦,静态方法'
+
+	# 特性
+	@property  # 动态方法转变为类的特性,需要带上这个装饰器以及去掉self|无私有字段时尽量别用property	
+	def Bar(self):
+		# print self.Name
+		return 'something'
+
+	# 析构函数,但它并非用来执行销毁对象这个动作的;一般用不到;Py解释器要销毁对象时,发出个通知,然后才销毁
+	def __del__(self):
+		print '解释器要销毁我了,我要做最后一次的呐喊'
+
+p1 = Person('Anderson')
+print p1.Name # Anderson
+print Person.blood # 血 [访问静态字段|推荐如此用]
+print Person.Name # 报错 类不能访问动态字段
+print p1.blood # 血 [对象也可以访问静态字段|平常不大建议使用]
+p1.having_lunch()  # 对象调用动态方法
+p1.Bar # 对象调用特性; 不能加括号
+Person.Foo() # 类调用静态方法|甚至在动态方法里也这么调用静态方法
+p2 = Person('William', True)
+
+print p2.__hasBeenToUSA # 报错
+p2.show() # 但可以用动态方法访问到类的私有字段
+p2.__sha() # 报错, 无法直接访问私有方法, 但可以通过动态方法访问到私有方法,但L80可行
+p2._Person__sha() # 1个下划线+类名+2个下划线+私有方法名 在Py中可从外部访问私有方法,但不推荐
+p2.Foo2() # 这里是私有方法
+p2.yume = True
+print p2.yume # True
+——————————————————————
+# 经典类中的特性全部都是可读可写
+class Person:
+	def __init__(self):
+		self.__name = 'alex'
+	@property
+	def Name(self):
+		return self.__name
+
+p1 = Person()
+print p1.Name # 通过特性Name,读取self.__name的值
+p1.Name = 'xx' # 通过特性Name,设置self.__name的值
+
+# 新式类中的特性默认都是只读,如果想要设置,那么就要再创建一个被装饰@xxx.setter修饰的特性
+class Person(object):
+	def __init__(self):
+		self.__name = 'alex'
+	@property
+	def Name(self):
+		return self.__name
+
+p1 = Person()
+print p1.Name # 通过特性Name,读取self.__name的值
+p1.Name = 'xx' # Error
+
+# 新式类这么做的好处是什么呢？
+# 通过这样来防止对私有变量的修改,所有的对象就只能读取,不能被修改。(例如,人的基因)
+# 如果属性是可以被修改的,那么就需要再创建一个特性
+	@Name.setter
+	def Name(self, value):
+		self.__name = value
+# 这样一来,就可以通过特性来修改
+# 即,上述的p1.Name = 'xx' 就不会报错。
+# 应用场景
+class Person(object):
+	def __init__(self, gene, clothes):
+		self.__gene = gene
+		slef.__clothes = clothes
+
+	@property
+	def Gene(slef):
+		return self.__gene
+
+	@property
+	def Clothes(self):
+		return self.__clothes
+
+	@Clothes.setter
+	def Clothes(self, value):
+		self.__clothes = value
+
+# 创建基因为AB的人，衣服为比基尼
+p1 = Person('AB', 'bikini')
+# 可以获取人的基因，但是不能修改基因
+——————————————————————
+class Foo:
+	def __init__(self):
+		pass
+	def Go(self):
+		print 'Go!'
+	def __call__(self):
+		print 'call'
+
+
+f1 = Foo() # 给Foo加上()括号就是执行__init__方法
+f1()   # 给f1加上括号就是执行__call__方法
+——————————————————————
+子类(派生类)  父类(基类)
+class Father:
+	def __init__(self):
+		self.Fname = 'ffff'
+		print 'fayher.__init__'
+	def Func(self):
+		print 'father.Func'
+	def Bad(self):
+		print 'father.抽烟喝酒烫头'
+
+class Son(Father):
+	def __init__(self):
+		self.Sname = 'ssss'
+		print 'son.__init__'
+		Father.__init__(self) # 显式调用父类的构造函数,或者用L174的super(子类名,对象)函数+让父类继承(object),才能调用父类构造函数|super常为新式类中用,显式调用常经典类的方法
+		# super(Son, self).__init__()
+
+	def Bar(self):
+		print 'son.bar'
+	def Bad(self):
+		print 'son.抽烟喝酒' # 继承父类方法后,对其重写
+
+
+s1 = Son() # print 'son.__init__'
+s1.Bar() # son.bar
+s1.Func() # father.Func
+s1.Bad() # son.抽烟喝酒
+
+——————————————————————————————
+class Person:
+
+	def __init__(self, name, gene, weight):
+		self.Name = name
+		self.__Gene = gene
+		if name != 'alex':
+			self.Gender = '男'
+
+		self.Weight = weight
+		
+		self.Age = None
+
+	def talk(self):
+		print 'xxxxxxx'
+
+	def fight(self, value):
+		if self.Weight > value:
+			print '打'
+		else:
+			print '跑'
+
+p1 = Person('n1', 'a', 190)
+p1.Age = 18
+p2 = Person('n2', 'aa', 50)
+p1.talk()
+p2.talk()
+p2.fight(p1.Weight)  # 跑
+
+print p2.__dict__  # 获取所有字段
+
+
+新式类 (有继承object时,2.2始有)  比经典类更多特性;fix了经典类多继承(Py特有,C#/Java只能继承1个)时的bug(多类继承自左至右,经典类的多类继承使用深度优先,新式类的多类继承使用广度优先);推荐用;主流框架都用
+经典类 (3.0+取消)https://docs.python.org/release/2.2.3/whatsnew/sect-rellinks.html
+www.cnblogs.com/wupeiqi/articles/4183835.html
+——————————————————————————————————
+抽象类
+from abc import ABCMeta, abstractmethod
+class Alert:
+	__metaclass__ = ABCMeta
+
+	@abstractmethod
+	def Send(self):pass
+
+# 抽象类+抽象方法=接口规范
+class Weixin(Alert):
+	def __init__(self):
+		print '__init__'
+
+	def Send(self):
+		print 'send.Weixin'
+
+f = Weixin()
+f.Send()
+
+写try就得写except,但else和finally就非必需
+
+assert(条件)  # 断言;满足才往下走
+定义游戏角色，先定义人，然后设定人的功能、特征、工作、年龄、人种、国籍、性别、特长等信息
+Liz、John、Peter
