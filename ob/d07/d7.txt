@@ -1,0 +1,14 @@
+ulimit -n  # 当前终端能打开多少个文件
+
+多进程 Multiprocessing
+
+审计开发
+
+Select vs poll vs epoll异步IO模型
+http://www.cnblogs.com/alex3714/p/4372426.html
+
+Python的select()方法直接调用操作系统的IO接口，它监控sockets,open files, and pipes(所有带fileno()方法的文件句柄)何时变成readable 和writeable, 或者通信错误，select()使得同时监控多个连接变的简单，并且这比写一个长循环来等待和监控多客户端连接要高效，因为select直接通过操作系统提供的C的网络接口进行操作，而不是通过Python的解释器。
+
+Poll与Select几乎没区别,只是去掉了文件限制符
+epoll比select效率高,通知就绪文件时由整个循环变成了只通知就绪的了
+
