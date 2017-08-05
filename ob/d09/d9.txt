@@ -1,0 +1,61 @@
+刷新和跳转
+<meta http-equiv='Refresh' Content='30'>
+<meta http-equiv='Refresh' Content='5, Url=http://www.autohome.com.cn'>
+
+<div>
+	<a href='#id1'>Chapter 1</a>
+	<a href='#id2'>Chapter 2</a>
+	<a href='#id3'>Chapter 3</a>
+</div>
+<div>
+	<p id='id1'>Chapter One</p>
+	<p id='id2'>Chapter Two</p>
+	<p id='id3'>Chapter Three</p>
+</div>
+<select multiple='multiple' size='4'>
+	<option>...</option>
+</select>
+<select>
+	<optgroup label='aaa'>
+		<option>11</option>
+		<option>22</option>
+	</optgroup>
+</select>
+input
+    type='text'
+    type='password'
+    type='checkbox'
+    type='button' value='xxxx'
+    type='submit' value='xxxx'
+    type='file'
+<input type='radio' xx='xxxx' />
+
+<form action='....' method='POST'> <!--action内为表单要提交到的后台地址-->
+	Name:<input name='username' type='text' />
+	<br>
+	pwd:<input name='password' type='password' />
+
+	<input type='button' value='提交' />  <!--不会刷新表单-->
+	<input type='submit' value='提交' />  <!--会刷新表单-->
+</form>  // 见d10
+
+<label for='name2'>姓名：<input id='name2' type='text' /></label>  <!--写for让光标在点标签时自动进入input中-->
+<fieldset>
+	<legend>zzzz</legend>
+	<p>yyyy</p>
+	<p>xxxx</p>
+</fieldset>
+
+background: url(...) -100px -220px no-repeat;
+height:
+width:
+
+自定义 "cursor:url(...),auto;"
+.clearfix:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+.clearfix{*+height:1%;}
+或.clearfix{overflow:auto;_height:1%}
+或.clearfix{overflow:hidden;_zoom:1;}
+
+Position: http://www.cnblogs.com/canuseethat/archive/2010/09/16/1827804.html
+父relative
+	子absolute

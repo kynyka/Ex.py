@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+	.sp{
+		margin:15px;
+	}
+	.il{
+		display:inline-block;
+		width: 100px;
+		height: 30px;
+    	line-height: 30px;
+	}
+	.tar{
+		text-align: right;
+	}
+	.wn{
+		background-color: #FAAFBE;
+		color:red;
+	}
+	.w200{
+		width:200px;
+	}
+	.mm8{
+		margin-left: -8px;
+	}
+	.w204{
+		width:204px;
+	}
+	
+	</style>
+</head>
+<body>
+	<form>
+		<div class='sp'>
+			<label for='name'><div class='il tar'>姓&nbsp;名：</div><input class='w200' id='name' type='text' maxlength="20" /></label>
+			<span class='il wn'>请输入姓名</span>
+		</div>
+		<div class='sp'>
+			<label for='password1'><div class='il tar'>设置密码：</div><input class='w200'  id='password1' type='password' /></label>
+			<span class='il wn'>请输入密码</span>
+		</div>
+		<div class='sp'>
+			<label for='password2'><div class='il tar'>确认密码：</div><input class='w200'  id='password2' type='password' /></label>
+			<span class='il wn'>请确认密码</span>
+		</div>
+		<div class='sp'>
+			<div class='il tar'>省&nbsp;份：</div>
+			<select id='province' class='w204 mm8'  />
+				<option>吉林</option>
+				<option>黑龙江</option>
+				<option>辽宁</option>
+				<option>广东</option>
+				<option selected="selected">广西</option>
+			</select>
+			<span class='il wn'>请选择省份</span>
+		</div>
+		<div class='sp'>
+			<label>
+				<div class='il tar'>性&nbsp;别 ：</div>
+				<span style='margin-right: 90px;'>男<input type='radio' name='sex' value="male" />&nbsp;&nbsp;女<input type='radio' name='sex' value="female" />
+				</span>
+			</label>
+			<span class='il wn'>请选择性别</span>
+		</div>
+
+
+	</form>
+</body>
+</html>
