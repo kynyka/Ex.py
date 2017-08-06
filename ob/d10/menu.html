@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>menu</title>
+	<link rel="stylesheet" href='css/menu.css'>
+	<link rel="stylesheet" href='font-awesome-4.7.0/css/font-awesome.css'>
+</head>
+<body>
+	<div class="container">
+		<div>
+			<div class='title'>Menu1 <i class="fa fa-taxi" aria-hidden="true"></i></div>
+			<div class='body hide'>
+				<a href=''>M1-c1</a>
+				<a href=''>M1-c2</a>
+				<a href=''>M1-c3</a>
+			</div>
+		</div>
+
+
+		<div>
+			<div class='title'>Menu2 <i class="fa fa-ship" aria-hidden="true"></i></div>
+			<div class='body hide'>
+				<a href=''>M2-c1</a>
+				<a href=''>M2-c2</a>
+				<a href=''>M2-c3</a>
+			</div>
+		</div>
+
+
+		<div>
+			<div class='title'>Menu3</div>
+			<div class='body hide'>
+				<a href=''>M3-c1</a>
+				<a href=''>M3-c2</a>
+				<a href=''>M3-c3</a>
+			</div>
+		</div>
+
+
+		<div>
+			<div class='title'>Menu4</div>
+			<div class='body hide'>
+				<a href=''>M4-c1</a>
+				<a href=''>M4-c2</a>
+				<a href=''>M4-c3</a>
+			</div>
+		</div>
+
+
+		<div>
+			<div class='title'>Menu5</div>
+			<div class='body hide'>
+				<a href=''>M5-c1</a>
+				<a href=''>M5-c2</a>
+				<a href=''>M5-c3</a>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+
+	<script src='http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js'></script>
+	<script type="text/javascript">
+		$(function(){
+			$('.title').click(function(){
+				$(this).next().removeClass('hide');
+				$(this).parent().siblings().children('.body').addClass('hide');
+			})
+		})
+	</script>
+</body>
+</html>

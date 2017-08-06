@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		.returnTop{
+			position:fixed;
+			width:50px;
+			height:60px;
+			right:20px;
+			bottom:20px;
+			background-color:red;
+			color:#fff;
+		}
+		.hide{
+			display:none;
+		}
+	</style>
+</head>
+<body>
+	<div id='checklist'>
+		<input type='checkbox' value='1' />篮球
+		<input type='checkbox' value='2' />足球
+		<input type='checkbox' value='3' />羽毛球
+	</div>
+	<input type='button' value='全选' id='selectAll' />
+	<input type='button' value='不选' id='uncheckAll' />
+	<input type='button' value='反选' id='reverseAll' />
+
+
+
+
+
+
+
+
+
+    <hr />
+	<p>I would like to say: <span></span></p>
+	<input type="button" id='addId1' value='追加1' />
+	<input type="button" id='addId2' value='追加2' />
+
+
+
+
+
+	<hr />
+	<input fuck='abc' value='tmd' type='checkbox'/>tmd_nizaiganma
+    <hr />
+    
+    <div style='height:3000px'>asd</div>
+	
+	<!-- <div id='return_top' class='returnTop' onclick='Go();'>返回顶部</div> -->
+	<div id='return_top' class='returnTop'>返回顶部</div>
+
+	<script src='http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js'></script>
+	<script type="text/javascript">
+		// $("input[fuck='abc']").attr('checked',true);
+		$("input[fuck='abc']").prop("checked",false);
+
+
+		/* -- 分割 -- */
+
+		$(function(){
+			// 当页面框架加载完成之后，默认执行该函数
+			$('#return_top').click(function(){
+				$(window).scrollTop(0);
+			})
+
+
+			$('#selectAll').click(function(){
+				$('#checklist :checkbox').attr('checked',true);
+				// $('#checklist input[type="checkbox"]').attr('checked',true);
+			})
+			$('#uncheckAll').click(function(){
+				$('#checklist :checkbox').attr('checked',false);
+			})
+			$('#reverseAll').click(function(){
+				$('#checklist :checkbox').each(function(){
+					$(this).attr('checked',!$(this).attr('checked'))
+				})
+			})
+
+
+
+
+
+			$('#addId1,#addId2').click(function(){ //or $('input[type="button"]').click(function(){
+				/* 对多个标签施加统一的方法*/
+				/*$('p').append('alex')*/
+				
+				// 针对不同标签，分别施加不同的方法
+				// 获取当前点击的标签，可以是：追加1，也可以是追加2
+				var currentId = $(this).attr('id');
+				if (currentId == 'addId1') {
+					// $('p').append('alex ');
+					// $('p').text('I would like to say: alex');
+					$('p > span').text('alex');
+				} else if(currentId == 'addId2') {
+					// $('p').append('ob ');
+					// $('p').text('I would like to say: ob');
+					$('p > span').text('ob');
+				} else {
+
+				}
+			})
+		})
+
+
+
+		$(window).scroll( function() { // 每次滚轮滚动一下就执行里面的内容一下
+			var height = $(window).scrollTop(); // 获取滚动条离顶部的距离
+			// console.log(height);
+			if (height>0) {
+				// 显示返回顶部
+				$('#return_top').removeClass('hide');
+			} else {
+				// 隐藏返回顶部
+				$('#return_top').addClass('hide');
+			};			
+		} );
+
+		// function Go(){
+		// 	$(window).scrollTop(0);
+		// }
+	</script>
+</body>
+</html>

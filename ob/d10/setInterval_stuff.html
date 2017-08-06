@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>欢迎blue shit莅临指导&nbsp;&nbsp;</title>
+	<style type="text/css">
+		.w500{
+			width:500px;
+			background:#ddd;
+		}
+		.pct{
+			width:0%;
+			height:10px;
+			background-color: green;
+		}
+	</style>
+</head>
+<body>
+	<div class='w500'>
+		<div id='process' class='pct'></div>
+	</div>
+
+
+	<script type="text/javascript">
+		progress = 0;
+		function Foo() {
+			var id = document.getElementById('process');
+			progress = progress + 10;
+			if (progress > 100) {
+				clearInterval(interval);
+			}
+			else{
+				id.style.width = progress + '%';
+			}
+		}
+		interval = setInterval(Foo, 500) //or setInterval('Foo()', 500)
+
+		/* --跑马灯-- */
+		function Go(){
+			var content = document.title;
+			var firstChar = content.charAt(0);
+			var sub = content.substring(1,content.length);
+			document.title = sub + firstChar;
+		}
+		setInterval(Go,1000);
+	</script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+www.cnblogs.com/wupeiqi/articles/4457274.html
+http://www.php100.com/manual/jquery/scroll.html
+
+function Foo(name){
+		var arg2 = arguments[1]
+        console.log(name);
+        console.log(arg2);
+}
+
+Foo('wow','ya')
+
+
+匿名函数 将函数赋值给一个变量
+var temp = function () {
+	...
+}
+
+自执行函数 先俩括号后补func
+(function(){
+	...
+})()
+
+array
+	添加 push\unshift\splice[100,0,'ok']
+	截取 slice
+	翻转 reverse
+
+var array = [11,22,33,44,55]
+var dict = {'name':'alex','age':19}
+for(var item in array){
+	console.log(item) // 遍历的都是key
+}
+for(var item in dict){
+	console.log(item) // 遍历的都是key
+}
+
+var tag = document.createElement('a');
+tag.href = 'http://www.autohome.com.cn';
+tag.innerText = '点我啊';
+var id1 = document.getElementById('t1');
+id1.appendChild(tag);
+
+var tag = "<a href='http://www.autohome.com.cn'>揍你</a>";
+var id1 = document.getElementById('t1');
+id1.append(tag); // or id1.innerHTML = tag;
+
+'  sdf dfdf  '.trim() // 去首尾空格
+
+<form id='F1' action='https://www.sogou.com/web?' method='GET'>
+	Name:<input name='query' type='text' />
+
+	<input type='submit' value='提交' onclick='Foo();'/>
+</form>
+
+function Foo() {
+	document.getElementById('F1').submit();
+}
+
+http://www.php100.com/manual/jquery/toggleClass.html
+	toggleClass()
+
+append()
+prepend()
+
+after()//元素外插入
+before()
+
+empty()
+remove()
+
+筛选
+  主：查找
+		children([expr])
+		parent([expr])
+		next([expr])
+		prev([expr])
+		siblings([expr]) // 不包括自己
+  次之：
+  		nextAll([expr])
+  		prevall([expr])
+
+jQuery链式执行
+MeAdmin
+EasyUI

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+        .gray{
+            color:#999;
+        }
+        .black{
+            color:black;
+        }
+    </style>
+</head>
+<body>
+    <form action='https://www.sogou.com/web?' method='GET'>
+    Name:<input name='query' type='text' />
+
+    <input type='submit' value='提交' />
+    </form>
+    <hr />
+    <!-- <input type='text' class="gray" id='tip' value='请输入关键字' onfocus="Enter();" onblur="Leave();"> -->
+    <input type='text' class="gray" id='tip' value='请输入关键字'>
+
+
+
+
+
+
+
+
+    <script src='http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js'></script>
+    <script type="text/javascript">
+        $(function(){
+            // 链式调用
+            //$('#tip').focus(function(){xx}).blur(function(){yy}).click(function(){zz}).change(function(){uu})
+
+            $('#tip').focus(function(){
+                // 获取标签
+                // 方式一： $('#tip')
+                // 方式二： $(this)
+                var id = $(this);
+                id.attr('class','black'); //or id.addClass = 'black';
+                if (id.val()=='请输入关键字' || id.val().trim()=='') {
+                    id.val('');
+                }
+            })
+
+
+            $('#tip').blur(function(){
+                var id = $(this);
+                var val = id.val();
+                if (id.length==0 || id.val().trim()=='') {
+                    id.val('请输入关键字');
+                    id.attr('class','gray');
+                }
+                else {
+                    id.attr('class','black');
+                }
+            })
+        })
+
+
+
+
+
+
+        var a = document.getElementsByName('query');
+        console.log(a[0]);
+        console.info(a[0].value);
+
+        function Enter(){
+            var id = document.getElementById('tip');
+            id.className = 'black';
+            if (id.value=='请输入关键字' || id.value.trim()=='') {
+                id.value = '';
+            }
+        }
+
+        function Leave(){
+            var id = document.getElementById('tip');
+            var val = id.value;
+            if (id.length==0 || id.value.trim()=='') {
+                id.value = '请输入关键字';
+                id.className = 'gray';
+            }
+            else {
+                id.className = 'black';
+            }
+        }
+    </script>
+</body>
+</html>
