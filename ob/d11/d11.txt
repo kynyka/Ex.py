@@ -1,0 +1,81 @@
+www.cnblogs.com/wupeiqi/articles/4491246.html
+
+mvc mtv这俩框架都是对代码的归类(堆放原则)
+
+url判断筛选->路由系统：
+  ↓
+⒈MVC：
+	Controller 业务逻辑的处理
+	  ↓
+	Model 对数据库进行操作的处理
+	  ↓
+	View 放html文件
+或
+  ↓
+⒉MTV：(就是MVC改改文件夹名而已orz)
+	View 处理业务逻辑
+	  ↓
+	Model 对数据库进行操作的处理
+	  ↓
+	Template 放html文件
+
+
+创建一个project其中可包含多个app
+
+django是mtv模式
+⒈创建app
+⒉url映射(urls)
+⒊处理url的函数(views)
+⒋运行django程序：python manage.py runserver ip:port或者ide里配参运行
+⒌访问url
+
+django中的路由系统和其他语言的框架有所不同，在django中每一个请求的url都要有一条路由映射，这样才能将请求交给对一个的view中的函数去处理。其他大部分的Web框架则是对一类的url请求做一条路由映射，从而使路由系统变得简洁。
+
+ORM - code first  (django这种先创建代码，再通过代码创建表的)
+
+1.创建数据库
+2.配置文件settings里连接数据库(INSTALLED_APPS里添加app、修改DATABASES)
+3.创建model,继承自models.Model类，即(models.Model)
+	静态字段 = models.CharField(max_length=50)【CharField可自行修改】
+4.在cmd中(需据项目择用2.7.x还是3.x)执行：
+    python manage.py makemigrations
+    python manage.py migrate
+5.日后修改了model
+6.再执行步骤4即可
+
+https://docs.djangoproject.com/en/1.11/ref/models/fields/#field-types
+
+模板语言的默认帮助方法很少,实际可能须自己通过simple_tag实现模版语言中的帮助方法的扩展：
+⒈ 在app中创建templatetags模块
+⒉ 创建任意 .py 文件，如：xx.py
+	#!/usr/bin/env python
+	#coding:utf-8
+	from django import template
+	from django.utils.safestring import mark_safe
+	from django.template.base import resolve_variable, Node, TemplateSyntaxError
+ 
+	register = template.Library()
+ 
+	@register.simple_tag
+	def my_simple_time(v1,v2,v3):
+    	return  v1 + v2 + v3
+ 
+	@register.simple_tag
+	def my_input(id,arg):
+    	result = "<input type='text' id='%s' class='%s' />" %(id,arg,)
+    	return mark_safe(result)
+
+⒊ 在使用自定义simple_tag的html文件中导入之前创建的 xx.py 文件名
+	{% load xxx %}
+⒋ 使用simple_tag
+	{% my_simple_time 1 2 3%}
+	{% my_input 'id_username' 'hide'%}
+
+
+form:
+GET 敲回车/刷新
+POST点提交
+csrf问题,暴力做法就是注掉setting的那行
+
+用户组 用户 多对多
+用户组 主机 一对多
